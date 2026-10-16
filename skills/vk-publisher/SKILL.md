@@ -13,7 +13,10 @@ description: >
 
 ## Предусловия
 1. Переменная окружения `VK_TOKEN` (ключ сообщества с правом `wall`). Если её нет — сказать пользователю, как получить: сообщество → Управление → Страницы… нет → «Работать с API» → ключ доступа; либо предложить путь через `browser-publisher`. Никогда не печатать значение токена.
-2. `group_id` целевого сообщества — из `/workspace/brand/accounts.md` или спросить. Принимается и `club12345`, и числом.
+2. Целевое сообщество — из `/workspace/brand/accounts.md` (по умолчанию приоритет:
+   `nord21vek` → `vod_str` → `southspecialnetwork`). Скрипт принимает как числовой id,
+   так и короткий адрес: `--screen-name nord21vek` (id определится через `groups.getById`).
+   Если пользователь назвал другую площадку — спросить, а не подставлять из реестра молча.
 3. Финальный текст подтверждён пользователем ЯВНО. Без подтверждения — остановиться.
 
 ## Шаг 1. Проверка по карте площадки
@@ -26,7 +29,8 @@ description: >
 Текст передать файлом (не аргументом командной строки), чтобы экранирование не сломало кириллицу/переносы:
 
 ```bash
-python3 scripts/vk_post.py --group-id <ID> --text-file draft.txt [--photo /path/img.jpg] [--publish-after UNIXTIME]
+python3 scripts/vk_post.py --screen-name nord21vek --text-file draft.txt   # или --group-id -12345678
+# опции: [--photo /path/img.jpg] [--publish-after UNIXTIME]
 ```
 
 Скрипт: загрузка фото (getWallUploadServer→saveWallPhoto) при наличии, затем `wall.post` с `from_group=1`, `attachments`, опционально `publish_date`. Выводит `post_id` и ссылку `vk.com/wall-<gid>_<pid>`.

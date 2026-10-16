@@ -3,6 +3,7 @@
 
 Usage:
   python3 vk_post.py --group-id -12345678 --text-file draft.txt [--photo img.jpg] [--publish-after 1700000000]
+  python3 vk_post.py --screen-name nord21vek --text-file draft.txt   # resolves num id via groups.getById
 
 Token is read from the environment variable VK_TOKEN and never printed.
 """
@@ -61,7 +62,8 @@ def upload_photo(token, group_id, path):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--group-id", required=True, help="e.g. -12345678 or 12345678")
+    ap.add_argument("--group-id", help="e.g. -12345678 or 12345678")
+    ap.add_argument("--screen-name", help="community short address (e.g. nord21vek); num id resolved via groups.getById")
     ap.add_argument("--text-file", required=True, help="path to UTF-8 file with final post text")
     ap.add_argument("--photo", help="optional local image path")
     ap.add_argument("--publish-after", type=int, help="unixtime for delayed publishing")
@@ -71,7 +73,14 @@ def main():
     if not token:
         sys.exit("VK_TOKEN environment variable is not set.")
 
-    gid = int(args.group_id)
+    if args.group_id is None and args.screen_name is None:
+        sys.exit("Provide either --group-id or --screen-name.")
+    if args.group_id is not None:
+        gid = int(args.group_id)
+    else:
+        info = api("groups.getById", token, group_id=args.screen_name)
+        gid = -int(info["groups"][0]["id"])
+        print(f"Resolved @{args.screen_name} -> group id {gid}")
     if gid > 0:
         gid = -gid  # communities are negative ids
 
