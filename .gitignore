@@ -1,5 +1,1 @@
-.DS_Store
-*.skill
-node_modules/
-.env
-.env.local
+dist/

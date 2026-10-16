@@ -20,6 +20,8 @@ When this skill triggers, go straight to Step 1. Do not summarise. Start input g
 
 ## Step 1. Gather inputs
 
+> **Project addendum (RU platforms):** after the text is final, check the target platform's card at `skills/social-media-ru/references/platforms/<slug>.md` (ВКонтакте / MAX / Telegram / TenChat) and apply its limits — VK has no Markdown, Telegram captions are ≤1024 chars, MAX/TenChat are plain text. For multi-platform output use `crosspost-adapter`. Publishing: vk-publisher / telegram-publisher / browser-publisher, only after explicit user confirmation.
+
 Call AskUserQuestion:
 
 ```json
