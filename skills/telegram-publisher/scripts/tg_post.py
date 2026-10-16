@@ -11,6 +11,7 @@ import json
 import os
 import sys
 import urllib.parse
+import urllib.error
 import urllib.request
 
 
@@ -33,8 +34,16 @@ def call(token, method, fields=None, files=None):
     else:
         data = urllib.parse.urlencode(fields or {}).encode()
         req = urllib.request.Request(f"https://api.telegram.org/bot{token}/{method}", data=data)
-    with urllib.request.urlopen(req, timeout=60) as resp:
-        out = json.loads(resp.read().decode())
+    try:
+        with urllib.request.urlopen(req, timeout=60) as resp:
+            out = json.loads(resp.read().decode())
+    except urllib.error.HTTPError as e:
+        detail = ""
+        try:
+            detail = json.loads(e.read().decode()).get("description", "")
+        except Exception:
+            pass
+        sys.exit(f"Telegram API error {e.code}: {detail or e.reason}")
     if not out.get("ok"):
         sys.exit(f"Telegram API error: {out.get('description')}")
     return out["result"]
