@@ -56,6 +56,15 @@ Based on the answers:
 - "I will paste examples": wait for reference posts, note the structural patterns, then proceed
 - "Use my training posts": read the intended author’s confirmed training posts, not unrelated drafts or another client’s files
 
+## Step 1b. Platform check (project addendum, RU platforms)
+
+This fork is adapted for ВКонтакте / MAX / Telegram / TenChat (see skill `social-media-ru`).
+Before finalising the post:
+1. Ask which platform(s) this post targets if not stated in the request.
+2. Read the matching platform card at `skills/social-media-ru/references/platforms/<slug>.md` and apply its limits (text length, hashtag count, formatting rules, links policy). Do not rely on memory of how a platform works.
+3. If the user wants the same idea on several platforms, produce this draft as the master text and hand off to `crosspost-adapter`.
+4. Publishing routes: VK → `vk-publisher`, Telegram → `telegram-publisher`, MAX/TenChat/UI-only formats → `browser-publisher`. Never publish without explicit user confirmation of the final text.
+
 ## Step 2. Research and plan
 
 First read the supplied evidence and requested reference structure. If these support the task, use them without adding unnecessary external research. Verify additional claims when needed; unavailable sources leave those claims pending. Look for:
