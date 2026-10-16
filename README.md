@@ -1,3 +1,30 @@
+# ВЕРСИИ И УСТАНОВКА
+
+## Важно при клонировании/установке этого форка
+
+Все изменения для работы с ВКонтакте находятся в **ветке**
+`qwen-code-60bf2b88-2f45-42db-b742-c097036099ca` (коммиты `92780de`, `74b29e8`, `ecafcd6`).
+Ветка `main` = оригинальный англоязычный LinkedIn-пак без адаптации.
+
+Если после `git clone` вы видите только LinkedIn-скиллы и ноль упоминаний VK —
+вы на `main`. Исправление:
+
+```bash
+git fetch origin
+git checkout qwen-code-60bf2b88-2f45-42db-b742-c097036099ca
+# или, чтобы сделать ветку постоянной:
+git branch -M main-ru && git push -u origin main-ru
+```
+
+После переключения проверить, что адаптация на месте:
+
+```bash
+ls skills/ | grep -E "vk|telegram|crosspost|browser|social-media-ru"   # 5 новых скиллов
+cat brand/accounts.md   # три ВК-сообщества: nord21vek, vod_str, southspecialnetwork
+```
+
+Содержание адаптации — в `RU-ADAPTATION.md`.
+
 <p align="center">
   <img src="assets/banner.svg" alt="Social Media Skills by Charlie Hills" width="100%"/>
 </p>
